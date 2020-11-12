@@ -1,0 +1,26 @@
+/* Provide sufficient contrast against white background */
+a, a:visited, a:hover, a:active {
+    color: #00866e;
+}
+
+code {
+    color: #E01A76;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.spm {
+    color: #7a7978;
+}
+
+.arrow {
+    float: right;
+}
+
+.spmIndent {
+    margin-left: 15px;
+}

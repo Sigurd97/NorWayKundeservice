@@ -34,9 +34,7 @@ export class Home extends Component {
         return (
             <div>
                 <h1>Spørsmål og svar</h1><br></br>
-                <h5>Hva lurer du på? Velg tema og finn svar på alt fra hvem som<br></br>
-                    kan få rabatt og hvordan du søker om refusjon til hvordan<br></br>
-                    appen fungerer og hva slags bagasje du kan ha med om bord.</h5><br></br><hr></hr>
+                <h5>Hva lurer du på?</h5><br></br><hr></hr>
                 {hovedkategorier}
             </div>
         );
@@ -46,5 +44,6 @@ export class Home extends Component {
         const response = await fetch('api/kundeservice/hovedkategorier');
         const data = await response.json();
         this.setState({ hovedkategorier: data, loading: false });
+
     }
 }

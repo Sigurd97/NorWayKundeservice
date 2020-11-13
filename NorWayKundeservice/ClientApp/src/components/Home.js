@@ -7,17 +7,17 @@ export class Home extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { hovedkategorier: [], loading: true };
+        this.state = { MainKategorier: [], loading: true };
     }
 
     componentDidMount() {
-        this.getHovedkategorier();
+        this.getMainKategorier();
     }
 
-    static renderHovedkategoriList(hovedkategorier) {
+    static renderMainKategoriList(MainKategorier) {
         return (
             <div>
-                {hovedkategorier.map(kategori =>
+                {MainKategorier.map(kategori =>
                     <Jumbotron key={kategori.id}>
                        <h2> <Link className="text-dark" to={`/faqs/${kategori.id}`}>{kategori.navn}</Link> </h2>
                     </Jumbotron>
@@ -27,23 +27,23 @@ export class Home extends Component {
     }
 
     render() {
-        let hovedkategorier = this.state.loading
+        let MainKategorier = this.state.loading
             ? <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
-            : Home.renderHovedkategoriList(this.state.hovedkategorier);
+            : Home.renderMainKategoriList(this.state.MainKategorier);
 
         return (
             <div>
-                <h1>Spørsmål og svar</h1><br></br>
+                <h1>FAQ</h1><br></br>
                 <h5>Hva lurer du på?</h5><br></br><hr></hr>
-                {hovedkategorier}
+                {MainKategorier}
             </div>
         );
     }
 
-    async getHovedkategorier() {
-        const response = await fetch('api/kundeservice/hovedkategorier');
+    async getMainKategorier() {
+        const response = await fetch('api/kundeservice/MainKategorier');
         const data = await response.json();
-        this.setState({ hovedkategorier: data, loading: false });
+        this.setState({ MainKategorier: data, loading: false });
 
     }
 }

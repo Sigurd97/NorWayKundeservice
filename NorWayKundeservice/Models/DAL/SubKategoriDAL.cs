@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace NorWayKundeservice.Models
 {
-    public class UnderkategoriDAL
+    public class SubKategoriDAL
     {
-        VyContext db = new VyContext();
+        NorWayContext db = new NorWayContext();
 
-        public IEnumerable<Underkategori> GetUnderkategorierFromHovedkategoriId(int id)
+        public IEnumerable<SubKategori> GetSubKategorierFromMainKategoriId(int id)
         {
             try
             {
-                return db.Underkategorier.Where(u => u.HovedkategoriId == id).ToList();
+                return db.SubKategorier.Where(u => u.MainKategoriId == id).ToList();
             }
             catch
             {

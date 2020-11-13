@@ -1,62 +1,62 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Spinner, Breadcrumb } from 'reactstrap';
-import { UnderkategoriCollapseItem } from './UnderkategoriCollapseItem';
+import { SubKategoriCollapseItem } from './SubKategoriCollapseItem'
 
 export class FAQs extends Component {
     static displayName = FAQs.name;
 
     constructor(props) {
         super(props);
-        this.state = { underkategorier: [], loadingUnderkategorier: true, loadingHovedkategori: true };
+        this.state = { SubKategorier: [], loadingSubKategorier: true, loadingMainKategori: true };
     }
 
     componentDidMount() {   
         const { match: { params } } = this.props;
-        this.getUnderkategorier(params.hovedkategoriId);
-        this.getHovedkategori(params.hovedkategoriId);
+        this.getSubKategorier(params.MainKategoriId);
+        this.getMainKategori(params.MainKategoriId);
     }
 
     render() {
-        let underkategorier = this.state.loadingUnderkategorier
+        let SubKategorier = this.state.loadingSubKategorier
             ? <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
-            : FAQs.renderUnderkategoriList(this.state.underkategorier);
-        let hovedkategori = this.state.loadingHovedkategori
+            : FAQs.renderSubKategoriList(this.state.SubKategorier);
+        let MainKategori = this.state.loadingMainKategori
             ? <p></p>
-            : this.state.hovedkategoriNavn;
+            : this.state.MainKategoriNavn;
         return (
             <div>
                 <Breadcrumb tag="nav" listTag="div">
                     <Link className="breadcrumb-item" to={'/'}>Hjem</Link>
-                    <div className="active breadcrumb-item">{hovedkategori}</div>
+                    <div className="active breadcrumb-item">{MainKategori}</div>
                 </Breadcrumb>
-                <h1>Spørsmål og svar</h1>
+                <h1>FAQ</h1>
                 <br></br><hr></hr>
-                {underkategorier}
+                {SubKategorier}
             </div>
         );
     }
 
-    static renderUnderkategoriList(underkategorier) {
+    static renderSubKategoriList(SubKategorier) {
         return (
             <div>
-                {underkategorier.map(underkategori =>
-                    <UnderkategoriCollapseItem key={underkategori.id} underkategori={underkategori} />
+                {SubKategorier.map(SubKategori =>
+                    <SubKategoriCollapseItem key={SubKategori.id} SubKategori={SubKategori} />
                 )}
             </div>
         );
     }
 
-    async getUnderkategorier(hovedkategoriId) {
-        const response = await fetch('api/kundeservice/underkategorier?hovedkategoriId=' + hovedkategoriId);
+    async getSubKategorier(MainKategoriId) {
+        const response = await fetch('api/kundeservice/SubKategorier?MainKategoriId=' + MainKategoriId);
         const data = await response.json();
-        this.setState({ underkategorier: data, loadingUnderkategorier: false });
+        this.setState({ subKategorier: data, loadingSubKategorier: false });
     }
 
-    async getHovedkategori(hovedkategoriId) {
-        const response = await fetch('api/kundeservice/hovedkategori?hovedkategoriId=' + hovedkategoriId);
+    async getMainKategori(MainKategoriId) {
+        const response = await fetch('api/kundeservice/MainKategori?MainKategoriId=' + MainKategoriId);
         const data = await response.json();
         console.dir(data);
-        this.setState({ hovedkategoriNavn: data, loadingHovedkategori: false });
+        this.setState({ MainKategoriNavn: data, loadingMainKategori: false });
     }
 }

@@ -3,7 +3,7 @@ import { Collapse } from 'reactstrap';
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 import { FAQCollapseItem } from './FAQCollapseItem';
 
-export class UnderkategoriCollapseItem extends Component {
+export class SubKategoriCollapseItem extends Component {
     constructor(props) {
         super(props);
 
@@ -11,13 +11,13 @@ export class UnderkategoriCollapseItem extends Component {
         this.state = {
             collapse: false,
             faqs: [],
-            underkategoriId: this.props.underkategori.id
+            SubKategoriId: this.props.SubKategori.id
         };
     }
 
     async toggleCollapse() {
         if (!this.state.collapse) {
-            const response = await fetch('api/kundeservice/faqs?underkategoriId=' + this.state.underkategoriId);
+            const response = await fetch('api/kundeservice/faqs?SubKategoriId=' + this.state.SubKategoriId);
             const faqs = await response.json();
             this.setState({ faqs: faqs });
         }
@@ -25,13 +25,13 @@ export class UnderkategoriCollapseItem extends Component {
     }
 
     render() {
-        const underkategori = this.props.underkategori;
+        const SubKategori = this.props.SubKategori;
         let arrow = this.state.collapse ? <IoIosArrowUp className="arrow" /> : <IoIosArrowDown className="arrow" />;
 
         return (
             <div>
                 <h2 onClick={this.toggleCollapse}>
-                    <strong>{underkategori.navn} {arrow} </strong>
+                    <strong>{SubKategori.navn} {arrow} </strong>
                     <hr></hr>
                 </h2>
                 <Collapse isOpen={this.state.collapse}>

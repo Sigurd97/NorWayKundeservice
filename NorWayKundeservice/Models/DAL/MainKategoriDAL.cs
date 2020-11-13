@@ -6,14 +6,14 @@ using System.Threading.Tasks;
 
 namespace NorWayKundeservice.Models
 {
-    public class HovedkategoriDAL
+    public class MainKategoriDAL
     {
-        VyContext db = new VyContext();
-        public IEnumerable<Hovedkategori> GetAllHovedkategorier()
+        NorWayContext db = new NorWayContext();
+        public IEnumerable<MainKategori> GetAllMainkategorier()
         {
             try
             {
-                return db.Hovedkategorier.ToList();
+                return db.MainKategorier.ToList();
             }
             catch
             {
@@ -21,12 +21,12 @@ namespace NorWayKundeservice.Models
             }
         }
    
-        public Hovedkategori GetHovedkategori(int id)
+        public MainKategori GetMainkategori(int id)
         {
             try
             {
-                Hovedkategori hovedkategori = db.Hovedkategorier.Include("Underkategorier").FirstOrDefault(h => h.Id == id);
-                return hovedkategori;
+                MainKategori mainKategori = db.MainKategorier.Include("SubKategorier").FirstOrDefault(h => h.Id == id);
+                return mainKategori;
             }
             catch
             {

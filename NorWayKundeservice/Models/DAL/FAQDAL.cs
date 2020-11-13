@@ -8,13 +8,13 @@ namespace NorWayKundeservice.Models
 {
     public class FAQDAL
     {
-        public IEnumerable<FAQ> GetFAQsFromUnderkategoriId(int id)
+        public IEnumerable<FAQ> GetFAQsFromSubKategoriId(int id)
         {
-            using (var db = new VyContext())
+            using (var db = new NorWayContext())
             {
                 try
                 {
-                    return db.FAQ.Where(f => f.UnderkategoriId == id).OrderByDescending(r=> r.Rating).ToList();
+                    return db.FAQ.Where(f => f.SubKategoriId == id).OrderByDescending(r=> r.Rating).ToList();
                 }
                 catch
                 {
@@ -26,7 +26,7 @@ namespace NorWayKundeservice.Models
  
        public bool UpdateFAQRating(int faqId, int rating)
         {
-            using (var db = new VyContext())
+            using (var db = new NorWayContext())
             {
                 try
                 {

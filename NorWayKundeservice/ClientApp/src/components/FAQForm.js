@@ -10,12 +10,12 @@ export class FAQForm extends React.Component {
     constructor() {
         super();
         this.state = {
-            hovedkategorier: [],
-            underkategorier: [],
-            loadingHovedkategorier: true,
-            loadingUnderkategorier: true,
-            hovedkategoriId: 1,
-            underkategoriId: 1,
+            MainKategorier: [],
+            SubKategorier: [],
+            loadingMainKategorier: true,
+            loadingSubKategorier: true,
+            MainKategoriId: 1,
+            SubKategoriId: 1,
             errorOnSend: false,
             errorMessage: "",
             sendComplete: false
@@ -23,31 +23,31 @@ export class FAQForm extends React.Component {
     }
 
     componentDidMount() {
-        this.populateHovedkategorier();
+        this.populateMainKategorier();
     }
 
-    async changeHovedkategori(event) {
+    async changeMainkategori(event) {
         this.setState({ hovedkategoriId: event.target.value });
         event.persist();
 
-        await this.populateUnderkategorier(event.target.value);
+        await this.populateMainkategorier(event.target.value);
     }
 
-    async changeUnderkategori(event) {
-        this.setState({ underkategoriId: event.target.value });
+    async changeSubKategori(event) {
+        this.setState({ SubKategoriId: event.target.value });
     }
 
-    async populateHovedkategorier() {
-        const response = await fetch('api/kundeservice/hovedkategorier');
+    async populateMainKategorier() {
+        const response = await fetch('api/kundeservice/MainKategorier');
         const data = await response.json();
-        this.setState({ hovedkategorier: data, loadingHovedkategorier: false });
-        await this.populateUnderkategorier(1);
+        this.setState({ MainKategorier: data, loadingMainKategorier: false });
+        await this.populateSubKategorier(1);
     }
 
-    async populateUnderkategorier(underkategoriId) {
-        const response = await fetch('api/kundeservice/underkategorier?hovedkategoriId=' + underkategoriId);
+    async populateSubKategorier(SubKategoriId) {
+        const response = await fetch('api/kundeservice/underkategorier?hovedkategoriId=' + SubKategoriId);
         const data = await response.json();
-        this.setState({ underkategoriId: underkategoriId, underkategorier: data, loadingUnderkategorier: false });
+        this.setState({ SubKategoriId: SubKategoriId, SubKategorier: data, loadingSubKategorier: false });
     }
 
     onValidSubmit = (event, values) => {
@@ -56,10 +56,10 @@ export class FAQForm extends React.Component {
         formData.append('Epost', values.Epost);
         formData.append('Fornavn', values.Fornavn);
         formData.append('Etternavn', values.Etternavn);
-        formData.append('HovedkategoriId', values.HovedkategoriId);
-        formData.append('UnderkategoriId', values.UnderkategoriId);
+        formData.append('MainKategoriId', values.MainKategoriId);
+        formData.append('SubKategoriId', values.SubKategoriId);
         formData.append('Spørsmål', values.Spørsmål);
-        fetch("api/kundeservice/faqinnsendt",
+        fetch("api/kundeservice/faqinn",
             {
                 body: formData,
                 method: "post"
@@ -77,7 +77,7 @@ export class FAQForm extends React.Component {
     };
     onInvalidSubmit = (event, errors, values) => {
         this.setState({
-            errorMessage: "Noe gikk galt. Sørg for at alle feltene er fylt inn riktig.", errorOnSend: true
+            errorMessage: "Noe gikk galt! Sørg for at alle feltene er fylt inn riktig.", errorOnSend: true
         });
     };
 
@@ -88,8 +88,8 @@ export class FAQForm extends React.Component {
                     <Link className="breadcrumb-item" to={'/'}>Hjem</Link>
                     <div className="active breadcrumb-item">Send spørsmål</div>
                 </Breadcrumb>
-                <h1>Gi oss tilbakemelding</h1>
-                <h4>Vil du gi oss ros eller ris, eller har du noen spørsmål til oss?</h4>
+                <h1>Gi oss din tilbakemelding</h1>
+                <h4>Gi oss gjerne en tilbakemelding på din opplevelse hos oss, eller har du et spørsmål til oss? Vi svarer så raskt som mulig.</h4>
                 <br></br><hr></hr>
                 <AvForm hidden={this.state.sendComplete} ref={c => (this.formData = c)} onValidSubmit={this.onValidSubmit} onInvalidSubmit={this.onInvalidSubmit}>
                     <AvField name="Fornavn" label="Fornavn*" type="text" validate={{
@@ -105,16 +105,16 @@ export class FAQForm extends React.Component {
                         maxLength: { value: 20, errorMessage: 'Etternavnet må være mellom 2 og 20 bokstaver' }
                     }} />
 
-                    {this.state.loadingHovedkategorier && this.state.loadingUnderkategorier
+                    {this.state.loadingMainKategorier && this.state.loadingSubKategorier
                         ? <Spinner style={{ width: '3rem', height: '3rem' }} type="grow" />
-                        : <div><AvField type="select" name="HovedkategoriId" label="Velg en kategori" onChange={this.changeHovedkategori.bind(this)} value={this.state.hovedkategoriId}>
-                            {this.state.hovedkategorier.map(kategori =>
+                        : <div><AvField type="select" name="MainKategoriId" label="Velg en kategori" onChange={this.changeMainKategori.bind(this)} value={this.state.MainKategoriId}>
+                            {this.state.MainKategorier.map(kategori =>
                                 <option value={kategori.id} key={kategori.id}>{kategori.navn}</option>
                             )}
                         </AvField>
-                            <AvField type="select" name="UnderkategoriId" label="Velg en underkategori" onChange={this.changeUnderkategori.bind(this)} value={this.state.underkategoriId}>
-                                {this.state.underkategorier.map(underkategori =>
-                                    <option value={underkategori.id} key={underkategori.id}>{underkategori.navn}</option>
+                            <AvField type="select" name="MainKategoriId" label="Velg en underkategori" onChange={this.changeSubKategori.bind(this)} value={this.state.SubKategoriId}>
+                                {this.state.SubKategoriategorier.map(SubKategori =>
+                                    <option value={SubKategori.id} key={SubKategori.id}>{SubKategori.navn}</option>
                                 )}
                             </AvField>
                         </div>
@@ -127,7 +127,7 @@ export class FAQForm extends React.Component {
                         </Alert>
                     }
                     <FormGroup>
-                        <Button>Send skjema</Button>
+                        <Button>Send Inn</Button>
                     </FormGroup>
                 </AvForm>
                 <Alert hidden={!this.state.sendComplete} color="success">

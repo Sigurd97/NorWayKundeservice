@@ -32,7 +32,7 @@ namespace NorWayKundeservice
                 configuration.RootPath = "ClientApp/build";
             });
 
-            services.AddDbContext<VyContext>();
+            services.AddDbContext<NorWayContext>();
 
         }
 

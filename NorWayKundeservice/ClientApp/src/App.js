@@ -14,7 +14,7 @@ export default class App extends Component {
     return (
       <Layout>
         <Route exact path='/' component={Home} />
-        <Route path='/faqs/:hovedkategoriId' component={FAQs} />
+        <Route path='/faqs/:MainKategoriId' component={FAQs} />
         <Route path='/skjema' component={FAQForm} />
       </Layout>
     );

@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace NorWayKundeservice.Models
 {
-    public class FAQInnsendtDAL
+    public class FaqInnDAL
     {
 
-        public int AddFAQInnsendt(FAQInnsendt FAQInnsendt)
+        public int AddFAQInn(FAQInn FAQInn)
         {
-            using (var db = new VyContext())
+            using (var db = new NorWayContext())
             {
                 try
                 {
-                    db.FAQInnsendte.Add(FAQInnsendt);
+                    db.FAQInn.Add(FAQInn);
                     db.SaveChanges();
                     return 1;
                 }

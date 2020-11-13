@@ -12,3 +12,4 @@ Importerte biblioteker:
 - Ikoner fra reactstrap
 
 Applikasjonen  kjører kun på localhost
+
